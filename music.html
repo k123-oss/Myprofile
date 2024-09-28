@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Music Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+        .music-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .music-item {
+            cursor: pointer;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        .music-item:hover {
+            background-color: #e0e0e0;
+        }
+        audio {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .control-btn {
+            margin: 0 5px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .control-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="music-list">
+            <!-- List of music items -->
+           
+            <div class="music-item" onclick="playMusic(1)">Lambiyaan Si Judaiyaan</div>
+            <div class="music-item" onclick="playMusic(2)">Pal Do Pal</div>
+            <div class="music-item" onclick="playMusic(3)">Arziyaan Full Song</div>
+            
+            
+        </div>
+        <audio id="audioPlayer" controls>
+            <source id="audioSource" src="" type="audio/mp3"> 
+            Your browser does not support the audio element.
+        </audio>
+        <div class="controls"> 
+            <button class="control-btn" onclick="prevSong()">Previous</button>
+            <button class="control-btn" onclick="nextSong()">Next</button>
+            <button class="control-btn" onclick="skip(-10)">-10s</button>
+            <button class="control-btn" onclick="skip(10)">+10s</button>
+        </div>
+    </div>
+    <h1>No more music, because it failed</h1>
+    <script>
+        var currentSongIndex = -1;
+        var songFiles = [
+            
+            'lambiyaan si judaiyaan.mp3',
+            'pal do pal.mp3',
+            'arziyaan full song.mp3'
+        
+        ];
+
+        // Play selected music
+        function playMusic(index) {
+            if (index < 0 || index >= songFiles.length) return;
+            currentSongIndex = index;
+            document.getElementById('audioSource').src = songFiles[currentSongIndex];
+            document.getElementById('audioPlayer').load();
+            document.getElementById('audioPlayer').play();
+        }
+
+        // Play the previous song
+        function prevSong() {
+            if (currentSongIndex > 0) {
+                playMusic(currentSongIndex - 1);
+            }
+        }
+
+        // Play the next song
+        function nextSong() {
+            if (currentSongIndex < songFiles.length - 1) {
+                playMusic(currentSongIndex + 1);
+            }
+        }
+
+        // Skip forward or backward in the current song
+        function skip(seconds) {
+            var audio = document.getElementById('audioPlayer');
+            audio.currentTime += seconds;
+        }
+    </script>
+</body>
+</html>
